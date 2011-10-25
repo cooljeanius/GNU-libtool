@@ -40,7 +40,7 @@ or obtained by writing to the Free Software Foundation, Inc.,
 #  include "lt__glibc.h"
 #  include "lt_system.h"
 #else
-#  define LT_SCOPE
+#  define LT_SCOPE extern
 #endif
 
 #if defined(__cplusplus)
