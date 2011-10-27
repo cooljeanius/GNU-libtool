@@ -56,10 +56,6 @@ AT_DATA([ltdl-loader.c],
 [[
 #include <stdio.h>
 #include <stdlib.h>
-#ifndef EXIT_FAILURE
-#  define EXIT_FAILURE        1
-#  define EXIT_SUCCESS        0
-#endif
 
 #include <limits.h>
 #ifndef PATH_MAX

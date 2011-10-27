@@ -227,6 +227,9 @@ AC_DEFUN([LTDL_INIT],
 [dnl Parse OPTIONS
 _LT_SET_OPTIONS([$0], [$1])
 
+GL_EARLY
+GL_INIT
+
 dnl We need to keep our own list of libobjs separate from our parent project,
 dnl and the easiest way to do that is redefine the AC_LIBOBJs macro while
 dnl we look for our own LIBOBJs.

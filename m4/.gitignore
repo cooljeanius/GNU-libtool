@@ -4,3 +4,10 @@
 /gnulib-comp.m4
 /gnulib-tool.m4
 /ltversion.m4
+/include_next.m4
+/ssize_t.m4
+/stddef_h.m4
+/stdlib_h.m4
+/unistd_h.m4
+/warn-on-use.m4
+/wchar_t.m4

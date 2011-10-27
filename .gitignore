@@ -39,7 +39,7 @@
 /GNUmakefile
 /INSTALL
 /README-release
-/gnulib-local
+/gnulib.mk
 /libtoolize
 /libtoolize.in
 /maint.mk

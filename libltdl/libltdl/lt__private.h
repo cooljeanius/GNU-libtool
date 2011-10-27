@@ -42,10 +42,7 @@ or obtained by writing to the Free Software Foundation, Inc.,
 #include <assert.h>
 #include <errno.h>
 #include <string.h>
-
-#if defined HAVE_UNISTD_H
-#  include <unistd.h>
-#endif
+#include <unistd.h>
 
 /* Import internal interfaces...  */
 #include "lt__alloc.h"

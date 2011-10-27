@@ -35,14 +35,6 @@ or obtained by writing to the Free Software Foundation, Inc.,
 #include <stdlib.h>
 #include <sys/types.h>
 
-/* Some systems do not define EXIT_*, even with STDC_HEADERS.  */
-#if !defined EXIT_SUCCESS
-# define EXIT_SUCCESS 0
-#endif
-#if !defined EXIT_FAILURE
-# define EXIT_FAILURE 1
-#endif
-
 /* Just pick a big number... */
 #define LT_FILENAME_MAX 2048
 

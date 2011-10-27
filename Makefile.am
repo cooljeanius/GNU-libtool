@@ -190,9 +190,15 @@ $(libtoolize_in): $(libtoolize_m4sh) $(sh_files) Makefile.am
 lt_Makefile_am	= $(srcdir)/$(ltdl_dir)/Makefile.am
 lt_Makefile_in	= $(srcdir)/$(ltdl_dir)/Makefile.in
 ltdl_mk		= $(srcdir)/$(ltdl_dir)/ltdl.mk
+gnulib_mk	= $(srcdir)/gnulib.mk
 
 $(lt_Makefile_am): $(ltdl_mk)
 	$(AM_V_at)rm -f '$@'
+	@for ignore in $(libltdl_ignore_modules); do \
+	  str=" gnulib module $$ignore"; \
+	  sed_mk=$$sed_mk'/^## begin'$$str'$$/,/^## end  '$$str'$$/d;'; \
+	done; \
+	$(SED) -e "$$sed_mk" '$(gnulib_mk)' > '$(gnulib_mk)T'
 	$(AM_V_GEN)( '$(SED)' -n '1,/^.. DO NOT REMOVE THIS LINE -- /p' \
 	      '$(ltdl_mk)'; \
 	  { echo 'ACLOCAL_AMFLAGS = -I ../m4'; \
@@ -208,12 +214,14 @@ $(lt_Makefile_am): $(ltdl_mk)
 	    echo 'CLEANFILES ='; \
 	    echo 'MOSTLYCLEANFILES ='; \
 	  }; \
-	  '$(SED)' -n '/^.. DO NOT REMOVE THIS LINE -- /,$$p' \
-	      '$(ltdl_mk)' \
+	  cat '$(ltdl_mk)' '$(gnulib_mk)T' \
+	    |'$(SED)' -n '/^.. DO NOT REMOVE THIS LINE -- /,$${/^[^#]/p;}' \
 	    |'$(SED)' -e 's|libltdl_||; s|libltdl/||; s|: libltdl/|: |' \
-	      -e 's|\$$(libltdl_|$$(|' \
+	      -e 's|\$$(libltdl_|$$(|; s|libltdl[_/]libgnu|libgnu|g;' \
+	      -e 's|/$(aux_dir)/|/../$(aux_dir)/|g' \
 	) |'$(SED)' -e '/^.. DO NOT REMOVE THIS LINE -- /d' \
-	      -e '1s,^\(.. Makefile.\)inc.*,\1am -- Process this file with automake to produce Makefile.in,' > '$@'
+	      -e '1s|^\(.. \)ltdl.mk.*|\1Makefile.am -- Process this file with automake to produce Makefile.in|' > '$@'
+	@rm -f '$(gnulib_mk)T'
 	$(AM_V_at)chmod a-w '$@'
 
 ## Document the make macros that are needed to build bootstrap-deps
@@ -337,6 +345,7 @@ $(DIST_MAKEFILE_LIST):
 ## -------- ##
 
 include libltdl/ltdl.mk
+include gnulib.mk
 
 lt_aclocal_m4	= $(srcdir)/$(ltdl_dir)/aclocal.m4
 lt_config_h_in	= $(srcdir)/$(ltdl_dir)/config-h.in
@@ -459,12 +468,11 @@ pkgauxdir	= $(pkgdatadir)/build-aux
 # uninstall and set executable with custom rules here.
 pkgaux_parent_files	= ltmain.sh
 pkgaux_install_files	= config.guess config.sub install-sh
-pkgaux_data_files	= $(pkgaux_parent_files)
-
-# Everything that gets picked up by aclocal is automatically distributed,
-# this is the list of macro files we install on the user's system.
-pkgmacro_files	= argz.m4 libtool.m4 ltdl.m4 ltoptions.m4 ltsugar.m4 \
-		  ltversion.m4 lt~obsolete.m4
+pkgaux_data_files	= $(pkgaux_parent_files) \
+			  snippet/_Noreturn.h \
+			  snippet/arg-nonnull.h \
+			  snippet/c++defs.h \
+			  snippet/warn-on-use.h
 
 ## These are installed as a subdirectory of pkgdatadir so that
 ## libtoolize --ltdl can find them later:
@@ -478,6 +486,7 @@ pkgltdl_files	= COPYING.LIB \
 		  argz.c \
 		  config-h.in \
 		  configure \
+		  $(pkgltdl_gnulib_files) \
 		  libltdl/lt__alloc.h \
 		  libltdl/lt__dirent.h \
 		  libltdl/lt__glibc.h \

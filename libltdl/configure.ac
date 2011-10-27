@@ -40,6 +40,7 @@ AC_PREREQ(2.59)dnl We use AS_HELP_STRING
 ## ------------------------ ##
 ## Autoconf initialisation. ##
 ## ------------------------ ##
+
 AC_INIT([libltdl], [2.4.3a], [bug-libtool@gnu.org])
 AC_CONFIG_HEADERS([config.h:config-h.in])
 AC_CONFIG_SRCDIR([ltdl.c])
@@ -58,7 +59,17 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 ## ------------------------------- ##
 ## Libtool specific configuration. ##
 ## ------------------------------- ##
+
 pkgdatadir='$datadir'"/$PACKAGE"
+
+## ---------------- ##
+## compiler checks. ##
+## ---------------- ##
+
+AC_PROG_CC
+AM_PROG_CC_C_O
+GL_EARLY
+AC_PROG_CPP
 
 
 ## ----------------------- ##
@@ -68,8 +79,16 @@ LT_INIT([dlopen win32-dll])
 _LTDL_SETUP
 
 
+## ---------------------- ##
+## Gnulib initialisation. ##
+## ---------------------- ##
+
+GL_INIT
+
+
 ## -------- ##
 ## Outputs. ##
 ## -------- ##
+
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
