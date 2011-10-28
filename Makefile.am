@@ -741,11 +741,25 @@ $(package_m4): $(dotversion) Makefile.am
 tests/atconfig: $(config_status)
 	$(AM_V_GEN)$(SHELL) '$(config_status)' '$@'
 
+sed_strip_aux_dir	= $(SED) -e 's, $(auxdest)/, ,g'
+sed_strip_ltdl_dir	= $(SED) -e 's, $(ltdldest)/, ,g'
+
+tests/atlocal: Makefile
+	{ \
+	  echo '# Location of important files needed by test suite.'; \
+	  echo '# Copyright (C) 2011 Free Software Foundation, inc.'; \
+	  echo 'abs_aux_dir="'`$(lt__cd) '$(aux_dir)' && pwd`'"'; \
+	  echo 'abs_macro_dir="'`$(lt__cd) '$(macro_dir)' && pwd`'"'; \
+	  echo 'pkgmacro_files="$(pkgmacro_files)"'; \
+	  echo 'pkgconfig_files="'`echo " $(auxexefiles) $(auxfiles)" | $(sed_strip_aux_dir)`'"'; \
+	  echo 'pkgltdl_files="'`echo " $(ltdldatafiles)" | $(sed_strip_ltdl_dir)`'"'; \
+	} > '$@'
+
 DISTCLEANFILES += tests/atconfig
 
 CD_TESTDIR	= abs_srcdir=`$(lt__cd) $(srcdir) && pwd`; cd tests
 
-testsuite_deps = tests/atconfig $(srcdir)/$(TESTSUITE)
+testsuite_deps = tests/atconfig tests/atlocal $(srcdir)/$(TESTSUITE)
 testsuite_deps_uninstalled = $(testsuite_deps) libltdl/libltdlc.la \
 			     $(bin_SCRIPTS) $(LTDL_BOOTSTRAP_DEPS)
 
