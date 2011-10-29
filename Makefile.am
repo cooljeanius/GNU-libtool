@@ -744,16 +744,21 @@ tests/atconfig: $(config_status)
 sed_strip_aux_dir	= $(SED) -e 's, $(auxdest)/, ,g'
 sed_strip_ltdl_dir	= $(SED) -e 's, $(ltdldest)/, ,g'
 
+# Running through configure_edit, rather than expanding the make values directly
+# inside the rule ensures that atlocal contains the same contests as everything
+# else that is configure_edit substituted.
 tests/atlocal: Makefile
 	{ \
 	  echo '# Location of important files needed by test suite.'; \
 	  echo '# Copyright (C) 2011 Free Software Foundation, inc.'; \
 	  echo 'abs_aux_dir="'`$(lt__cd) '$(aux_dir)' && pwd`'"'; \
 	  echo 'abs_macro_dir="'`$(lt__cd) '$(macro_dir)' && pwd`'"'; \
-	  echo 'pkgmacro_files="$(pkgmacro_files)"'; \
-	  echo 'pkgconfig_files="'`echo " $(auxexefiles) $(auxfiles)" | $(sed_strip_aux_dir)`'"'; \
-	  echo 'pkgltdl_files="'`echo " $(ltdldatafiles)" | $(sed_strip_ltdl_dir)`'"'; \
-	} > '$@'
+	  echo 'pkgmacro_files="@pkgmacro_files@"'; \
+	  echo 'pkgaux_files="@pkgaux_files@"'; \
+	  echo 'pkgaux_install_files="@pkgaux_install_files@"'; \
+	  echo 'pkgaux_parent_files="@pkgaux_parent_files@"'; \
+	  echo 'pkgltdl_files="@pkgltdl_files@"'; \
+	} | $(configure_edit) > '$@'
 
 DISTCLEANFILES += tests/atconfig
 
