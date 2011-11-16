@@ -200,7 +200,7 @@ END
    cd ..
    rm -rf conftest.dir
 ])
-if test $lt_cv_make_order_only = yes; then
+if test yes = "$lt_cv_make_order_only"; then
   ORDER='|'
 else
   ORDER=''

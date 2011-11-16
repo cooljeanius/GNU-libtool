@@ -557,7 +557,7 @@ changelog		= $(distdir)/ChangeLog
 # date is updated to the following year.
 changelog_start_date = 2011-01-01
 $(changelog): FORCE
-	$(AM_V_GEN)if test -d $(srcdir)/.git; then \
+	$(AM_V_GEN)if test -d '$(srcdir)/.git'; then \
 	  $(gitlog_to_changelog) --amend=$(git_log_fix) \
 	      --since=$(changelog_start_date) > '$@T'; \
 	  rm -f '$@'; mv '$@T' '$@'; \
@@ -874,7 +874,6 @@ COMMON_TESTS = \
 	tests/nomode.test \
 	tests/objectlist.test \
 	tests/quote.test \
-	tests/sh.test \
 	tests/suffix.test \
 	tests/tagtrace.test \
 	tests/cdemo-static.test \

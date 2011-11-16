@@ -146,7 +146,7 @@ dnl AC_DEFUN([AC_LIBLTDL_INSTALLABLE], [])
 # -----------------
 # Code shared by LTDL_INSTALLABLE and LTDL_INIT([installable]).
 m4_defun([_LTDL_INSTALLABLE],
-[if test -f $prefix/lib/libltdl.la; then
+[if test -f "$prefix/lib/libltdl.la"; then
   lt_save_LDFLAGS=$LDFLAGS
   LDFLAGS="-L$prefix/lib $LDFLAGS"
   AC_CHECK_LIB([ltdl], [lt_dlinit], [lt_lib_ltdl=yes])
