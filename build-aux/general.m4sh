@@ -70,15 +70,15 @@ lt_nl='
 '
 IFS="	 $lt_nl"
 
-dirname='s,/[^/]*$,,'
-basename='s,^.*/,,'
+dirname='s|/[^/]*$||'
+basename='s|^.*/||'
 
 # func_dirname file append nondir_replacement
 # Compute the dirname of FILE.  If nonempty, add APPEND to the result,
 # otherwise set result to NONDIR_REPLACEMENT.
 func_dirname ()
 {
-    func_dirname_result=`$ECHO "${1}" | $SED "$dirname"`
+    func_dirname_result=`$ECHO "${1}" |$SED "$dirname"`
     if test "X$func_dirname_result" = "X${1}"; then
       func_dirname_result=${3}
     else
@@ -90,7 +90,7 @@ func_dirname ()
 # func_basename file
 func_basename ()
 {
-    func_basename_result=`$ECHO "${1}" | $SED "$basename"`
+    func_basename_result=`$ECHO "${1}" |$SED "$basename"`
 } # func_basename may be replaced by extended shell implementation
 
 
@@ -109,13 +109,13 @@ func_basename ()
 func_dirname_and_basename ()
 {
     # Extract subdirectory from the argument.
-    func_dirname_result=`$ECHO "${1}" | $SED -e "$dirname"`
+    func_dirname_result=`$ECHO "${1}" |$SED "$dirname"`
     if test "X$func_dirname_result" = "X${1}"; then
       func_dirname_result=${3}
     else
       func_dirname_result=$func_dirname_result${2}
     fi
-    func_basename_result=`$ECHO "${1}" | $SED -e "$basename"`
+    func_basename_result=`$ECHO "${1}" |$SED "$basename"`
 } # func_dirname_and_basename may be replaced by extended shell implementation
 
 
