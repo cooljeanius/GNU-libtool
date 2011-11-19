@@ -150,17 +150,36 @@ exec_cmd=
 
 
 # func_lo2o object
-func_lo2o ()
-{
+if (eval 'x=a/b.xx; test a/b.c = "${x%.xx}.c"') 2>/dev/null
+then
+  eval 'func_lo2o ()
+  {
+    case $1 in
+      *.lo) func_lo2o_result=${1%.lo}.$objext ;;
+      *   ) func_lo2o_result=$1               ;;
+    esac
+  }'
+else
+  func_lo2o ()
+  {
     func_lo2o_result=`$ECHO "$1" | $SED "$lo2o"`
-} # func_lo2o may be replaced by extended shell implementation
+  }
+fi
 
 
 # func_xform libobj-or-source
-func_xform ()
-{
-    func_xform_result=`$ECHO "$1" | $SED 's/\.[^.]*$/.lo/'`
-} # func_xform may be replaced by extended shell implementation
+if (eval 'x=a/b.xx; test a/b.c = "${x%.*}.c"') 2>/dev/null
+then
+  eval 'func_xform ()
+  {
+    func_xform_result=${1%.*}.lo
+  }'
+else
+  func_xform ()
+  {
+    func_xform_result=`$ECHO "$1" | $SED 's|\.[^.]*$|.lo|'`
+  }
+fi
 
 
 # func_fatal_configuration arg...
