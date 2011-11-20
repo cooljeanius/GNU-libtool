@@ -189,16 +189,11 @@ $(libtoolize_in): $(libtoolize_m4sh) $(sh_files) Makefile.am
 
 lt_Makefile_am	= $(srcdir)/$(ltdl_dir)/Makefile.am
 lt_Makefile_in	= $(srcdir)/$(ltdl_dir)/Makefile.in
+lt_gnulib_mk	= $(srcdir)/$(ltdl_dir)/gnulib.mk
 ltdl_mk		= $(srcdir)/$(ltdl_dir)/ltdl.mk
-gnulib_mk	= $(srcdir)/gnulib.mk
 
 $(lt_Makefile_am): $(ltdl_mk)
 	$(AM_V_at)rm -f '$@'
-	@for ignore in $(libltdl_ignore_modules); do \
-	  str=" gnulib module $$ignore"; \
-	  sed_mk=$$sed_mk'/^## begin'$$str'$$/,/^## end  '$$str'$$/d;'; \
-	done; \
-	$(SED) -e "$$sed_mk" '$(gnulib_mk)' > '$(gnulib_mk)T'
 	$(AM_V_GEN)( '$(SED)' -n '1,/^.. DO NOT REMOVE THIS LINE -- /p' \
 	      '$(ltdl_mk)'; \
 	  { echo 'ACLOCAL_AMFLAGS = -I ../m4'; \
@@ -214,14 +209,13 @@ $(lt_Makefile_am): $(ltdl_mk)
 	    echo 'CLEANFILES ='; \
 	    echo 'MOSTLYCLEANFILES ='; \
 	  }; \
-	  cat '$(ltdl_mk)' '$(gnulib_mk)T' \
+	  cat '$(ltdl_mk)' '$(lt_gnulib_mk)' \
 	    |'$(SED)' -n '/^.. DO NOT REMOVE THIS LINE -- /,$${/^[^#]/p;}' \
 	    |'$(SED)' -e 's|libltdl_||; s|libltdl/||; s|: libltdl/|: |' \
 	      -e 's|\$$(libltdl_|$$(|; s|libltdl[_/]libgnu|libgnu|g;' \
 	      -e 's|/$(aux_dir)/|/../$(aux_dir)/|g' \
 	) |'$(SED)' -e '/^.. DO NOT REMOVE THIS LINE -- /d' \
 	      -e '1s|^\(.. \)ltdl.mk.*|\1Makefile.am -- Process this file with automake to produce Makefile.in|' > '$@'
-	@rm -f '$(gnulib_mk)T'
 	$(AM_V_at)chmod a-w '$@'
 
 ## Document the make macros that are needed to build bootstrap-deps
