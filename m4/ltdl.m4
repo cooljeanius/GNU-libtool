@@ -243,7 +243,7 @@ AC_ARG_WITH([included_ltdl],
     [AS_HELP_STRING([--with-included-ltdl],
                     [use the GNU ltdl sources included here])])
 
-if test "x$with_included_ltdl" != xyes; then
+if test yes != "$with_included_ltdl"; then
   # We are not being forced to use the included libltdl sources, so
   # decide whether there is a useful installed version we can use.
   AC_CHECK_HEADER([ltdl.h],
@@ -532,7 +532,7 @@ AC_CACHE_CHECK([whether deplibs are loaded by dlopen],
     ;;
   esac
   ])
-if test "$lt_cv_sys_dlopen_deplibs" != yes; then
+if test yes != "$lt_cv_sys_dlopen_deplibs"; then
  AC_DEFINE([LTDL_DLOPEN_DEPLIBS], [1],
     [Define if the OS needs help to load dependent libraries for dlopen().])
 fi
