@@ -13,22 +13,32 @@ and is not part of a release distribution.
 * If you incorporate a change from somebody on the net:
   If it is a large change, you must make sure they have signed the
   appropriate paperwork, and be sure to add their name and email
-  address to THANKS
+  address to THANKS.
 
 * If a change fixes a test, mention the test in the git log entry.
 
-* If somebody reports a new bug, mention his name in the git log entry
+* If somebody reports a new bug, mention their name in the git log entry
   and in the test case you write.
 
 * The correct response to most actual bugs is to write a new test case
   that demonstrates the bug.  Then fix the bug, re-run the test suite,
   and check everything in.
 
+* Always run the testsuite after applying a patch:
+    make check syntax-check TESTSUITEFLAGS="--jobs=$(nproc)" -j$(nproc)
+
+  Ideally also verify the release process doesn't break:
+    make distcheck TESTSUITEFLAGS="--jobs=$(nproc)" -j$(nproc)
+  This will run check & syntax-check from above, but will take longer as
+  builds & tests in different configurations.
+
 * Some files in the libtool package are not owned by libtool.  These
   files should never be edited here.  These files are:
 	COPYING
 	INSTALL
 	doc/
+	    + gendocs_template
+	    + gendocs_template_min
 	    + fdl.texi
 	libltdl/
 	    + COPYING.LIB
@@ -41,11 +51,22 @@ and is not part of a release distribution.
 	    + mdate-sh
 	    + missing
 	    + texinfo.tex
+	m4/
+	    + 00gnulib.m4
+	    + gnulib-cache.m4
+	    + gnulib-common.m4
+	    + gnu-comp.m4
+	    + gnulib-tool.m4
+	    + ltversion.m4
+	    + zzgnulib.m4
+	GNUmakefile
+	maint.mk
+
   The ones that are important for a release can be updated by ensuring
   gnulib is up-to-date, and running 'bootstrap' to recheck the links are
   correct.
 
-* Changes other than bug fixes must be mentioned in NEWS
+* Changes other than bug fixes must be mentioned in NEWS.
 
 
 3. Test Suite
@@ -55,12 +76,22 @@ and is not part of a release distribution.
   AT_CHECK) is on a single line so that 'testsuite -x' displays the
   whole thing.  You can use m4_do or '[... ]dnl' to wrap long lines.
 
-* Use
-    make -k check
+* To debug a failing or skipped range of tests, e.g. 13 to 14:
+    make check-local TESTSUITEFLAGS="--debug 13-14"
+  More generally, in the TESTSUITEFLAGS you can use the documented
+  options for Autotest generated testsuites:
+  https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/html_node/testsuite-Invocation.html
+
+* Run tests in parallel with
+    make -k check TESTSUITEFLAGS="--jobs=$(nproc)"
   liberally, on as many platforms as you can.  Use as many compilers and
-  linkers you can.  To run old and new testsuites separately, use
+  linkers you can.  To run old and new testsuites separately, use:
     make check TESTSUITEFLAGS=-V
     make check-local
+
+* The gnulib module also provides some maintainer-focused tests that only
+  work when run from a git checkout.
+    make syntax-check
 
 * The new Autotest testsuite uses keywords to denote test features:
     autoconf		needs Autoconf
@@ -130,7 +161,7 @@ and is not part of a release distribution.
 6. Editing '.am' Files
 ======================
 
-* Always use $(...) and not ${...}
+* Always use $(...) and not ${...}.
 
 * Use ':', not 'true'.  Use 'exit 1', not 'false'.
 
@@ -180,7 +211,7 @@ and is not part of a release distribution.
 
 
 8. Abstraction layers in libltdl
-=================================
+================================
 
 * The libltdl API uses a layered approach to differentiate internal and
   external interfaces, among other things.  To keep the abstraction
@@ -283,10 +314,10 @@ and is not part of a release distribution.
 9. Licensing Rules
 ==================
 
-GNU Libtool uses 3 different licenses for various of the files distributed
-herein, with several variations on license text.  It is important that
-you use the correct license text in each new file added.  Here are the
-texts along with some notes on when each is appropriate.  Appropriate
+GNU Libtool uses 3 different licenses for the files distributed herein,
+with several variations on license text.  It is important that you use
+the correct license text in each new file added.  Here are the texts
+along with some notes on when each is appropriate.  Appropriate
 commenting (shell, C etc) and decoration (m4 etc) assumed throughout.
 
 
@@ -329,10 +360,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with GNU Libtool; see the file COPYING.  If not, a copy
-can be downloaded from  http://www.gnu.org/licenses/gpl.html,
-or obtained by writing to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+along with GNU Libtool.  If not, see <https://www.gnu.org/licenses/>.
 
 
 
@@ -363,10 +391,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with <program name>; see the file COPYING.  If not, a copy
-can be downloaded from http://www.gnu.org/licenses/gpl.html,
-or obtained by writing to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+along with <program name>.  If not, see <https://www.gnu.org/licenses/>.
 
 
 
@@ -402,10 +427,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with <program name>; see the file COPYING.  If not, a copy
-can be downloaded from http://www.gnu.org/licenses/gpl.html,
-or obtained by writing to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+along with <program name>.  If not, see <https://www.gnu.org/licenses/>.
 
 
 
@@ -438,13 +460,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public
-License along with GNU Libltdl; see the file COPYING.LIB.  If not, a
-copy can be downloaded from  http://www.gnu.org/licenses/lgpl.html,
-or obtained by writing to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+License along with GNU Libltdl.  If not, see <https://www.gnu.org/licenses/>.
 
 -- 
-  Copyright (C) 2004-2008, 2010-2019, 2021-2022 Free Software
+  Copyright (C) 2004-2008, 2010-2019, 2021-2024 Free Software
   Foundation, Inc.
   Written by Gary V. Vaughan, 2004
 

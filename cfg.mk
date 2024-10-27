@@ -1,6 +1,6 @@
 # cfg.mk -- Configuration for maintainer-makefile
 #
-#   Copyright (c) 2011-2019, 2021-2022 Free Software Foundation, Inc.
+#   Copyright (c) 2011-2019, 2021-2024 Free Software Foundation, Inc.
 #   Written by Gary V. Vaughan, 2011
 #
 #   This file is part of GNU Libtool.
@@ -16,15 +16,20 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with GNU Libtool; see the file COPYING.  If not, a copy
-# can be downlodad from http://www.gnu.org/licenses/gpl.html,
-# or obtained by writing to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Boston, # MA 02111-1301, USA.
+# along with GNU Libtool.  If not, see <https://www.gnu.org/licenses/>.
 
 update-copyright-env := UPDATE_COPYRIGHT_FORCE=1 UPDATE_COPYRIGHT_USE_INTERVALS=1
 
-# Set format of NEWS
-old_NEWS_hash := 68e212222416d15e517576ce749b131f
+update-copyright: update-release-year
+update-release-year:
+	$(AM_V_GEN)year=`date +%Y`; \
+	sed -i \
+		-e "/_LT_COPY/,+1 { /Copyright/ {s:[0-9][0-9][0-9][0-9]:$$year:} }" \
+		-e "/^Copyright/ {s:[0-9][0-9][0-9][0-9]:$$year:} " \
+		m4/libtool.m4
+
+# Set format of NEWS.
+old_NEWS_hash := 61ef5bb8af40dc806027f40d99f8c980
 
 manual_title = Portable Dynamic Shared Object Management
 
@@ -36,8 +41,8 @@ else
 announcement_Cc_ = autotools-announce@gnu.org, $(PACKAGE_BUGREPORT)
 endif
 
-# Don't syntax check the mail subdirectory.
-VC_LIST_ALWAYS_EXCLUDE_REGEX = ^mail/
+# Don't syntax check the mail subdirectory or patches to gnulib itself.
+VC_LIST_ALWAYS_EXCLUDE_REGEX = ^(mail|gl)/
 
 local-checks-to-fix =				\
 	sc_require_config_h			\
@@ -47,6 +52,7 @@ local-checks-to-skip =				\
 	$(local-checks-to-fix)			\
 	sc_GPL_version				\
 	sc_cast_of_x_alloc_return_value		\
+	sc_indent				\
 	sc_prohibit_always-defined_macros	\
 	sc_prohibit_always_true_header_tests	\
 	sc_prohibit_strncpy			\

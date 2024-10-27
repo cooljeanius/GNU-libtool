@@ -9,7 +9,7 @@ consistent, portable interface.
 
 Libtool's home page is:
 
-    http://www.gnu.org/software/libtool/libtool.html
+    https://www.gnu.org/software/libtool/libtool.html
 
 See the file [NEWS][] for a description of recent changes to Libtool.
 
@@ -37,12 +37,12 @@ To use Libtool, add the new generic library building commands to your
 `Makefile`, `Makefile.in`, or `Makefile.am`.  See the documentation for
 details.
 
-[install]: http://git.savannah.gnu.org/cgit/libtool.git/tree/INSTALL
-[libtool]: http://www.gnu.org/s/libtool
+[install]: https://git.savannah.gnu.org/cgit/automake.git/tree/INSTALL
+[libtool]: https://www.gnu.org/s/libtool
 [libtool list]: mailto:libtool@gnu.org
-[news]: http://git.savannah.gnu.org/cgit/libtool.git/tree/NEWS
-[notes]: http://git.savannah.gnu.org/cgit/libtool.git/tree/doc/notes.texi
-[platforms]: http://git.savannah.gnu.org/cgit/libtool.git/tree/doc/PLATFORMS
+[news]: https://git.savannah.gnu.org/cgit/libtool.git/tree/NEWS
+[notes]: https://git.savannah.gnu.org/cgit/libtool.git/tree/doc/notes.texi
+[platforms]: https://git.savannah.gnu.org/cgit/libtool.git/tree/doc/PLATFORMS
 
 
 2. Reporting Bugs
@@ -82,7 +82,7 @@ details see the 'Copyright Assignment' section on our
 [Contributing][contribute] webpage.
 
 [bug mailing list]: mailto:bug-libtool@gnu.org
-[contribute]: http://www.gnu.org/software/libtool/contribute.html
+[contribute]: https://www.gnu.org/software/libtool/contribute.html
 
 
 3. The Test Suite
@@ -153,7 +153,7 @@ send the file `tests/testsuite.log` to the [bug mailing list][].
   To reduce load on the main server, please use one of the mirrors
   listed at:
 
-      http://www.gnu.org/order/ftp.html
+      https://www.gnu.org/order/ftp.html
 
 * Alpha quality pre-releases of GNU Libtool, also with detached
   signature files are available from:
@@ -162,9 +162,13 @@ send the file `tests/testsuite.log` to the [bug mailing list][].
 
   and some of the mirrors listed at:
 
-      http://www.gnu.org/order/ftp.html
+      https://www.gnu.org/order/ftp.html
 
 * The master libtool repository is stored in git.
+
+  Development and testing is primarily done on the 'development' git
+  branch. 'master' is used for release ready code. Periodically,
+  commits are cherry-picked from 'development' to 'master'.
 
   If you are a member of the savannah group for GNU Libtool, a writable
   copy of the libtool repository can be obtained by:
@@ -174,7 +178,7 @@ send the file `tests/testsuite.log` to the [bug mailing list][].
   If you are behind a firewall that blocks the git protocol, you may
   find it useful to use
 
-      git config --global url.http://git.sv.gnu.org/r/.insteadof \
+      git config --global url.https://git.sv.gnu.org/r/.insteadof \
         git://git.sv.gnu.org/
 
   to force git to transparently rewrite all savannah git references to
@@ -194,12 +198,12 @@ send the file `tests/testsuite.log` to the [bug mailing list][].
   - Autoconf 2.64 or later
   - Automake 1.11.1 or later
   - Help2man 1.29 or later
-  - Xz 4.999.8beta or later (from [tukaani.org](http://tukaani.org/xz))
+  - Xz 4.999.8beta or later (from [tukaani.org](https://tukaani.org/xz))
   - Texinfo 4.8 or later
   - Any prerequisites of the above (such as m4, perl, tex)
 
   Note that these bootstrapping dependencies are much stricter than
-  those required to use a destributed release for your own packages.
+  those required to use a distributed release for your own packages.
   After installation, GNU Libtool is designed to work either standalone,
   or optionally with:
   - Autoconf 2.59 or later
@@ -241,7 +245,7 @@ revision hash string in hexadecimal appended to all of that:
     2.4.2.418.3-30eaa
 
 --
-  Copyright (C) 2004-2010, 2015-2019, 2021-2022 Free Software
+  Copyright (C) 2004-2010, 2015-2019, 2021-2024 Free Software
   Foundation, Inc.
 
   Written by Gary V. Vaughan, 2004

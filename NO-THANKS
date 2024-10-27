@@ -49,6 +49,7 @@ Juergen Reuter			reuter@theoc01.desy.de
 Karl Berry			karl@gnu.org
 Maciej W. Rozycki		macro@linux-mips.org
 Manfred Weichel			weichel@global.nacamar.de
+Michael Pratt			mcpratt@pm.me
 Mike Gorchak			mike@malva.ua
 Mo DeJong			mdejong@redhat.com
 Nick Hudson			skrll@netbsd.org
@@ -65,25 +66,33 @@ Todd Vierling			tv@netbsd.org
 Vincent Torri			vtorri@univ-evry.fr
 ##
 ## Add bug reporters, patch Authors you forgot to attribute at commit
-## time with 'git commit --author=...' and other non-patch contributers
+## time with 'git commit --author=...' and other non-patch contributors
 ## below:
 ##
+Alex				lx_op@orcon.net.nz
 Allan McRae			allan@archlinux.org
 Andreas Schiffler		aschiffler@ferzkopp.net
+Andreas Stieger		Andreas.Stieger@gmx.de
+Anton Shterenlikht		shterenlikht@par-tec.com
 Brent Leback			brent.leback@st.com
 Camilo La Rota			camilo.larota@ens-lyon.fr
 Carl D. Roth			roth@cse.ucsc.edu
+Carlo Cabrera			carlo.antonio.cabrera@gmail.com
 Chris P. Ross			cross@eng.us.uu.net
 Christian Rössel		christian.roessel@gmx.de
 Christopher Hulbert		cchgroupmail@gmail.com
 Craig Tierney			Craig.Tierney@noaa.gov
 Dan McMahill			mcmahill@mtl.mit.edu
 Daniel Richard G.		skunk@iSKUNK.ORG
+Dave Allured			dave.allured@noaa.gov
 Dave Yost			Dave@Yost.com
+Dimitri Papadopoulos		dpo@sfr.fr
 Donn Washburn			n5xwb@comcast.net
 Erik van Pienbroek		erik-gnu@vanpienbroek.nl
 Ethan Mallove			ethan.mallove@sun.com
 Fred Cox			sailorfred@yahoo.com
+Frediano Ziglio		freddy77@gmail.com
+FX Coudert			fxcoudert@gcc.gnu.org
 Hiroyuki Sato			hiroysato@gmail.com
 Jakub Bogusz			qboosh@pld-linux.org
 James Su			james.su@gmail.com
@@ -138,6 +147,7 @@ Roland Mainz			roland.mainz@nrubsig.org
 Rudolf Leitgeb			r.leitgeb@x-pin.com
 Ryan Hill			dirtyepic@gentoo.org
 Sebastian Wilhelmi		wilhelmi@ira.uka.de
+Simon Sobisch
 Sven Verdoolaege		skimo@liacs.nl
 Terry D. Dontje			Terry.Dontje@Sun.COM
 Tobias Stoeckmann		tobias@stoeckmann.org
@@ -146,6 +156,6 @@ Ulrich Drepper			drepper@ipd.info.uni-karlsruhe.de
 Václav Zeman			vhaisman@gmail.com
 Warren Dodge			warren.l.dodge@Tektronix.com
 Xavier Pianet			xavier@xingo.com
-Xin Li
+Xin Li				d@delphij.net
 Юрий Андреевич Пухальский	pooh@cryptopro.ru
 Дилян Палаузов			dilyan.palauzov@aegee.org

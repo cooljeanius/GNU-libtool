@@ -1,6 +1,6 @@
 # demo.at -- Linking and loading. -*- Autotest -*-
 #
-#   Copyright (C) 2003-2004, 2011-2019, 2021-2022 Free Software
+#   Copyright (C) 2003-2004, 2011-2019, 2021-2024 Free Software
 #   Foundation, Inc.
 #   Written by Gary V. Vaughan, 2003
 #
@@ -17,10 +17,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with GNU Libtool; see the file COPYING.  If not, a copy
-# can be downloaded from  http://www.gnu.org/licenses/gpl.html,
-# or obtained by writing to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+# along with GNU Libtool.  If not, see <https://www.gnu.org/licenses/>.
 ####
 
 
@@ -498,6 +495,16 @@ AT_SETUP([force PIC objects])
 
 _LT_DEMO_SETUP
 
+LT_AT_CHECK_CONFIG([--enable-pic])
+_LT_CHECK_EXECUTE
+
+AT_CLEANUP
+
+
+AT_SETUP([force PIC objects (old option name)])
+
+_LT_DEMO_SETUP
+
 LT_AT_CHECK_CONFIG([--with-pic])
 _LT_CHECK_EXECUTE
 
@@ -511,7 +518,7 @@ AT_CLEANUP
 AT_SETUP([force non-PIC objects])
 
 AT_CHECK([case $host in
-hppa*|x86_64*|s390*)
+hppa*|amd64*|x86_64*|s390*)
   # These hosts cannot use non-PIC shared libs
   exit 77 ;;
 *-solaris*|*-sunos*)
@@ -536,7 +543,7 @@ fi
 ])
 
 _LT_DEMO_SETUP
-LT_AT_CHECK_CONFIG([--with-pic=no])
+LT_AT_CHECK_CONFIG([--disable-pic])
 _LT_CHECK_EXECUTE
 
 AT_CLEANUP

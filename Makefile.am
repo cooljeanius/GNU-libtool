@@ -1,6 +1,6 @@
 ## Makefile.am -- Process this file with automake to produce Makefile.in
 ##
-##   Copyright (C) 2003-2019, 2021-2022 Free Software Foundation, Inc.
+##   Copyright (C) 2003-2019, 2021-2024 Free Software Foundation, Inc.
 ##   Written by Gary V. Vaughan, 2003
 ##
 ##   This file is part of GNU Libtool.
@@ -16,10 +16,7 @@
 ## GNU General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
-## along with GNU Libtool; see the file COPYING.  If not, a copy
-## can be downloaded from  http://www.gnu.org/licenses/gpl.html,
-## or obtained by writing to the Free Software Foundation, Inc.,
-## 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+## along with GNU Libtool.  If not, see <https://www.gnu.org/licenses/>.
 #####
 
 ACLOCAL_AMFLAGS		= -I m4
@@ -333,7 +330,7 @@ EXTRA_DIST     += $(lt_aclocal_m4) \
 		  $(lt_obsolete_m4) \
 		  $(stamp_mk)
 
-$(lt_Makefile_in): $(lt_Makefile_am) $(lt_aclocal_m4)
+$(lt_Makefile_in): $(lt_Makefile_am) $(lt_aclocal_m4) $(lt_config_h_in)
 	$(AM_V_GEN)cd '$(srcdir)/$(ltdl_dir)' && $(AUTOMAKE) Makefile
 
 # Don't let unused scripts leak into the libltdl Makefile
@@ -370,7 +367,7 @@ lt_configure_deps = $(lt_aclocal_m4) $(lt_aclocal_m4_deps)
 $(lt_aclocal_m4): $(lt_aclocal_m4_deps)
 	$(AM_V_GEN)cd '$(srcdir)/$(ltdl_dir)' && $(ACLOCAL) -I ../m4
 
-$(lt_configure): $(lt_configure_deps)
+$(lt_configure): $(lt_configure_deps) $(lt_config_h_in)
 	$(AM_V_GEN)cd '$(srcdir)/$(ltdl_dir)' && $(AUTOCONF)
 
 $(lt_config_h_in): $(lt_configure_deps)
@@ -422,9 +419,10 @@ update_mans = \
 # manual pages if the sources for the build-tree files we want to
 # run have changed.
 $(libtool_1): $(ltmain_sh)
-	$(AM_V_GEN)$(update_mans) --help-option=--help-all libtool
+	$(AM_V_GEN)$(update_mans) -n 'Provide generalized library-building support services' --help-option=--help-all libtool
 $(libtoolize_1): $(libtoolize_in)
-	$(AM_V_GEN)$(update_mans) libtoolize
+	$(AM_V_GEN)$(update_mans) -n 'Prepare a package to use libtool' libtoolize
+
 
 
 ## ------------- ##
@@ -569,7 +567,7 @@ ASSORT = LC_ALL=C sort
 prologue = perl -ne '/^\#\#/ and exit; print' $(no_thanks)
 
 # Generate THANKS using git log entries as far as possible, fixing
-# up ommisions and errors from NO-THANKS configuration.
+# up omissions and errors from NO-THANKS configuration.
 $(thanks): FORCE
 	$(AM_V_GEN)if test -d '$(srcdir)/.git'; then \
 	  { \
@@ -727,6 +725,9 @@ TESTSUITE_AT	= tests/testsuite.at \
 		  tests/sysroot.at \
 		  tests/stresstest.at \
 		  tests/cmdline_wrap.at \
+		  tests/bug_62343.at	\
+		  tests/bug_71489.at \
+		  tests/bug_42313.at \
 		  $(NOTHING_ELSE)
 
 EXTRA_DIST     += $(testsuite) $(TESTSUITE_AT) $(package_m4)
